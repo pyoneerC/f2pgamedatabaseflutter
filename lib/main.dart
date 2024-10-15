@@ -4,10 +4,12 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,12 +18,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         brightness: Brightness.dark,
       ),
-      home: GameListScreen(),
+      home: const GameListScreen(),
     );
   }
 }
 
 class GameListScreen extends StatefulWidget {
+  const GameListScreen({super.key});
+
   @override
   _GameListScreenState createState() => _GameListScreenState();
 }
@@ -45,7 +49,7 @@ class _GameListScreenState extends State<GameListScreen> {
   }
 
   Future<void> fetchGames() async {
-    final url = 'https://free-to-play-games-database.p.rapidapi.com/api/games';
+    const url = 'https://free-to-play-games-database.p.rapidapi.com/api/games';
     try {
       final response = await http.get(
         Uri.parse(url),
@@ -85,7 +89,7 @@ class _GameListScreenState extends State<GameListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('F2P Games Database'),
+        title: const Text('F2P Games Database'),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
       ),
@@ -97,7 +101,7 @@ class _GameListScreenState extends State<GameListScreen> {
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search games...',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -137,7 +141,7 @@ class _GameListScreenState extends State<GameListScreen> {
                     },
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 // Platform Dropdown
                 Expanded(
                   child: DropdownButton<String>(
@@ -157,7 +161,7 @@ class _GameListScreenState extends State<GameListScreen> {
                     },
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 // Release Date Dropdown
                 Expanded(
                   child: DropdownButton<String>(
@@ -185,7 +189,7 @@ class _GameListScreenState extends State<GameListScreen> {
             padding: const EdgeInsets.all(10.0),
             child: Text(
               'Number of tracked games: ${filteredGames.length}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -194,16 +198,16 @@ class _GameListScreenState extends State<GameListScreen> {
           ),
           Expanded(
             child: filteredGames.isEmpty
-                ? Center(child: Text('No games found.'))
+                ? const Center(child: Text('No games found.'))
                 : ListView.builder(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               itemCount: filteredGames.length,
               itemBuilder: (context, index) {
                 final game = filteredGames[index];
 
                 return Card(
                   elevation: 8.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
+                  margin: const EdgeInsets.symmetric(vertical: 10.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   color: Colors.blueGrey.shade800,
@@ -221,7 +225,7 @@ class _GameListScreenState extends State<GameListScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(width: 15.0),
+                        const SizedBox(width: 15.0),
                         // Game details
                         Expanded(
                           child: Column(
@@ -230,66 +234,66 @@ class _GameListScreenState extends State<GameListScreen> {
                               // Title
                               Text(
                                 game['title'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 22.0,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               // Genre
                               Row(
                                 children: [
-                                  Icon(Icons.videogame_asset,
+                                  const Icon(Icons.videogame_asset,
                                       color: Colors.lightBlueAccent, size: 18),
-                                  SizedBox(width: 5.0),
+                                  const SizedBox(width: 5.0),
                                   Text(game['genre'],
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.lightBlueAccent)),
                                 ],
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               // Platform
                               Row(
                                 children: [
-                                  Icon(Icons.computer,
+                                  const Icon(Icons.computer,
                                       color: Colors.grey, size: 18),
-                                  SizedBox(width: 5.0),
+                                  const SizedBox(width: 5.0),
                                   Text(game['platform'],
                                       style: TextStyle(
                                           color: Colors.grey[400])),
                                 ],
                               ),
-                              SizedBox(height: 10.0),
+                              const SizedBox(height: 10.0),
                               // Publisher & Developer
                               Row(
                                 children: [
-                                  Icon(Icons.people,
+                                  const Icon(Icons.people,
                                       color: Colors.lightBlueAccent, size: 18),
-                                  SizedBox(width: 5.0),
+                                  const SizedBox(width: 5.0),
                                   Text('Publisher: ${game['publisher']}',
                                       style: TextStyle(
                                           color: Colors.grey[400])),
                                 ],
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               Row(
                                 children: [
-                                  Icon(Icons.build,
+                                  const Icon(Icons.build,
                                       color: Colors.lightBlueAccent, size: 18),
-                                  SizedBox(width: 5.0),
+                                  const SizedBox(width: 5.0),
                                   Text('Developer: ${game['developer']}',
                                       style: TextStyle(
                                           color: Colors.grey[400])),
                                 ],
                               ),
-                              SizedBox(height: 10.0),
+                              const SizedBox(height: 10.0),
                               // Release Date
                               Row(
                                 children: [
-                                  Icon(Icons.calendar_today,
+                                  const Icon(Icons.calendar_today,
                                       color: Colors.lightBlueAccent, size: 18),
-                                  SizedBox(width: 5.0),
+                                  const SizedBox(width: 5.0),
                                   Text('Release Date: ${game['release_date']}',
                                       style: TextStyle(
                                           color: Colors.grey[400])),
@@ -298,8 +302,7 @@ class _GameListScreenState extends State<GameListScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 15.0),
-                        // Play Now button
+                        // Play Now Button
                         ElevatedButton(
                           onPressed: () async {
                             final url = game['game_url'];
@@ -311,13 +314,13 @@ class _GameListScreenState extends State<GameListScreen> {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.lightBlueAccent, // button color
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 10.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           ),
-                          child: Text('Play Now',
+                          child: const Text('Play Now',
                               style: TextStyle(color: Colors.white)),
                         ),
                       ],
@@ -327,8 +330,56 @@ class _GameListScreenState extends State<GameListScreen> {
               },
             ),
           ),
+          // Footer with increased height and external link icon
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SizedBox(
+              height: 60.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      const url = 'https://maxcomperatore.com/';
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                    child: RichText(
+                      text: const TextSpan(
+                        text: 'Made by ',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Max Comperatore',
+                            style: TextStyle(
+                              color: Colors.blueAccent,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 5.0),
+                  const Icon(
+                    Icons.open_in_new,
+                    color: Colors.blueAccent,
+                    size: 18.0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+
         ],
-      ),
+    ),
     );
   }
 }

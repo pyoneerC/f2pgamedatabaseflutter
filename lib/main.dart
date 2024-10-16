@@ -330,7 +330,6 @@ class _GameListScreenState extends State<GameListScreen> {
               },
             ),
           ),
-          // Footer with increased height and external link icon
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: SizedBox(
@@ -338,31 +337,34 @@ class _GameListScreenState extends State<GameListScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () async {
-                      const url = 'https://maxcomperatore.com/';
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
-                    child: RichText(
-                      text: const TextSpan(
-                        text: 'Made by ',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Max Comperatore',
-                            style: TextStyle(
-                              color: Colors.blueAccent,
-                              decoration: TextDecoration.underline,
-                            ),
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () async {
+                        const url = 'https://maxcomperatore.com/';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                      child: RichText(
+                        text: const TextSpan(
+                          text: 'Made by ',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
                           ),
-                        ],
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Max Comperatore',
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

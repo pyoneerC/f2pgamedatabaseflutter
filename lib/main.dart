@@ -313,7 +313,7 @@ class _GameListScreenState extends State<GameListScreen> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightBlueAccent, // button color
+                            backgroundColor: Colors.lightBlueAccent,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 10.0),
                             shape: RoundedRectangleBorder(

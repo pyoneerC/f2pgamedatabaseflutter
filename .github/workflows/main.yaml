@@ -1,0 +1,93 @@
+name: Build Flutter App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Flutter
+    runs-on: ${{ matrix.platform == 'windows' && 'windows-latest' || 'ubuntu-latest' }}
+
+    strategy:
+      matrix:
+        platform: [android, web, windows, linux]
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.3
+
+      # Install dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Build APK and AAB for Android
+      - name: Build APK and App Bundle for Android
+        if: matrix.platform == 'android'
+        run: |
+          flutter build apk --release --verbose
+
+      # Build for Web
+      - name: Build Web
+        if: matrix.platform == 'web'
+        run: flutter build web --release --web-renderer html --verbose
+
+      # Build for Windows
+      - name: Build Windows
+        if: matrix.platform == 'windows'
+        run: flutter build windows --release --verbose
+
+      # Build for Linux
+      - name: Build Linux
+        if: matrix.platform == 'linux'
+        run: flutter build linux --release --verbose
+
+      # Upload APK
+      - name: Upload Signed APK
+        if: matrix.platform == 'android'
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      # Upload Web Build
+      - name: Upload Web Build
+        if: matrix.platform == 'web'
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+
+      # Upload Windows Build
+      - name: Upload Windows Build
+        if: matrix.platform == 'windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: build/windows/x64/runner/Release/*
+
+      # Upload Linux Build
+      - name: Upload Linux Build
+        if: matrix.platform == 'linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: build/linux/x64/release/bundle/*
+
+      # Deploy to Netlify using Netlify CLI
+      - name: Install Netlify CLI
+        if: matrix.platform == 'web'
+        run: npm install -g netlify-cli
+
+      - name: Netlify Deploy
+        if: matrix.platform == 'web'
+        run: |
+          netlify deploy --prod --dir=build/web --site=${{ secrets.NETLIFY_SITE_ID }} --auth=${{ secrets.NETLIFY_AUTH_TOKEN }}

@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [android, web, windows, linux]
+        platform: [android, web, windows]
 
     steps:
       # Checkout the repository
@@ -45,11 +45,6 @@ jobs:
         if: matrix.platform == 'windows'
         run: flutter build windows --release --verbose
 
-      # Build for Linux
-      - name: Build Linux
-        if: matrix.platform == 'linux'
-        run: flutter build linux --release --verbose
-
       # Upload APK
       - name: Upload Signed APK
         if: matrix.platform == 'android'
@@ -73,14 +68,6 @@ jobs:
         with:
           name: windows-build
           path: build/windows/x64/runner/Release/*
-
-      # Upload Linux Build
-      - name: Upload Linux Build
-        if: matrix.platform == 'linux'
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-build
-          path: build/linux/x64/release/bundle/*
 
       # Deploy to Netlify using Netlify CLI
       - name: Install Netlify CLI
